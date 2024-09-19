@@ -1,4 +1,4 @@
 package com.hackathon.entities.dtos;
 
-public record DoctorDto() {
+public record AppointmentRequestDto() {
 }
