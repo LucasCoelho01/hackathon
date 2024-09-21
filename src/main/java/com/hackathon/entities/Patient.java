@@ -1,17 +1,18 @@
 package com.hackathon.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.hackathon.entities.dtos.PatientRequestDto;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.security.SecureRandom;
+import java.util.List;
 
 @Data
 @Entity
 @Table(name = "patients")
-public class Patient {
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    private static final SecureRandom RANDOM = new SecureRandom();
+public class Patient implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -20,6 +21,14 @@ public class Patient {
     private String cpf;
     private String email;
     private String password;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
+
+    @JsonManagedReference
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
 
     public Patient(){}
 
@@ -31,6 +40,9 @@ public class Patient {
     }
 
     private String generatePassword() {
+        final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        final SecureRandom RANDOM = new SecureRandom();
+
         StringBuilder randomPassword = new StringBuilder(10);
         for (int i = 0; i < 10; i++) {
             int randomIndex = RANDOM.nextInt(CHARACTERS.length());

@@ -24,4 +24,8 @@ public class PatientService {
     public List<Patient> listPatients() {
         return patientRepository.findAll();
     }
+
+    public Patient findByCpf(String cpf) {
+        return patientRepository.findByCpf(cpf);
+    }
 }

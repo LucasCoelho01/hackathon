@@ -8,4 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface DoctorRepository extends JpaRepository<Doctor, String> {
+    Doctor findByCrm(String crm);
 }
