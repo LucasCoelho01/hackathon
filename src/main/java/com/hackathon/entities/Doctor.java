@@ -35,7 +35,7 @@ public class Doctor implements Serializable {
         this.password = generatePassword();
     }
 
-    private String generatePassword() {
+    public String generatePassword() {
         final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         final SecureRandom RANDOM = new SecureRandom();
 

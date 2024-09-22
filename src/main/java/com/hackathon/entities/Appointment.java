@@ -51,7 +51,7 @@ public class Appointment implements Serializable {
         this.finalDateTime = convertFinalLocalDateTime(LocalDateTime.parse(this.initialDateTime, formatter));
     }
 
-    private String convertInitialLocalDateTime(int year, int month, int day, int hour, int minute) {
+    public String convertInitialLocalDateTime(int year, int month, int day, int hour, int minute) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         LocalDateTime date = LocalDateTime.of(year, month, day, hour, minute);
@@ -59,7 +59,7 @@ public class Appointment implements Serializable {
         return date.format(formatter);
     }
 
-    private String convertFinalLocalDateTime(LocalDateTime initialDateTime) {
+    public String convertFinalLocalDateTime(LocalDateTime initialDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         return initialDateTime.plusHours(1).format(formatter);
