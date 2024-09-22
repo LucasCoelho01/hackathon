@@ -16,11 +16,11 @@ class AppointmentTest {
     private Appointment appointment;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         mockDoctor = Mockito.mock(Doctor.class);
         mockAppointmentRequestDto = Mockito.mock(AppointmentRequestDto.class);
 
-        Mockito.when(mockAppointmentRequestDto.year()).thenReturn(2023);
+        Mockito.when(mockAppointmentRequestDto.year()).thenReturn(2025);
         Mockito.when(mockAppointmentRequestDto.month()).thenReturn(9);
         Mockito.when(mockAppointmentRequestDto.day()).thenReturn(22);
         Mockito.when(mockAppointmentRequestDto.hour()).thenReturn(10);
@@ -32,21 +32,21 @@ class AppointmentTest {
     @Test
     void testConstructor() {
         assertNotNull(appointment.getDoctor());
-        assertEquals("22-09-2023 10:00", appointment.getInitialDateTime());
-        assertEquals("22-09-2023 11:00", appointment.getFinalDateTime());
+        assertEquals("22-09-2025 10:00", appointment.getInitialDateTime());
+        assertEquals("22-09-2025 11:00", appointment.getFinalDateTime());
     }
 
     @Test
-    void testConvertInitialLocalDateTime() {
-        String expectedInitialDateTime = "22-09-2023 10:00";
-        String actualInitialDateTime = appointment.convertInitialLocalDateTime(2023, 9, 22, 10, 0);
+    void testConvertInitialLocalDateTime() throws Exception {
+        String expectedInitialDateTime = "22-09-2025 10:00";
+        String actualInitialDateTime = appointment.convertInitialLocalDateTime(2025, 9, 22, 10, 0);
         assertEquals(expectedInitialDateTime, actualInitialDateTime);
     }
 
     @Test
     void testConvertFinalLocalDateTime() {
-        LocalDateTime initialDateTime = LocalDateTime.of(2023, 9, 22, 10, 0);
-        String expectedFinalDateTime = "22-09-2023 11:00";
+        LocalDateTime initialDateTime = LocalDateTime.of(2025, 9, 22, 10, 0);
+        String expectedFinalDateTime = "22-09-2025 11:00";
         String actualFinalDateTime = appointment.convertFinalLocalDateTime(initialDateTime);
         assertEquals(expectedFinalDateTime, actualFinalDateTime);
     }

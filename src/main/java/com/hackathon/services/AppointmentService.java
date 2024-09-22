@@ -29,7 +29,7 @@ public class AppointmentService {
     private EmailService emailService;
 
     @Transactional
-    public Appointment createAppointment(AppointmentRequestDto appointmentRequestDto) {
+    public Appointment createAppointment(AppointmentRequestDto appointmentRequestDto) throws Exception {
         Doctor doctor = doctorService.findByCrm(appointmentRequestDto.doctorCrm());
 
         Appointment appointment = new Appointment(appointmentRequestDto, doctor);

@@ -47,9 +47,9 @@ public class AppointmentServiceTest {
     private Appointment appointment;
 
     @BeforeEach
-    public void setUp() {
+    public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        appointmentRequestDto = new AppointmentRequestDto("54321", 2024, 9, 23, 10, 00);
+        appointmentRequestDto = new AppointmentRequestDto("54321", 2025, 9, 23, 10, 00);
         appointmentSetPatientRequestDto = new AppointmentSetPatientRequestDto("1", "12345678900");
         doctor = new Doctor();
         doctor.setCrm("54321");
@@ -57,7 +57,7 @@ public class AppointmentServiceTest {
     }
 
     @Test
-    public void testCreateAppointment() {
+    public void testCreateAppointment() throws Exception {
         // Mock the doctor retrieval and appointment save methods
         when(doctorService.findByCrm("54321")).thenReturn(doctor);
         when(appointmentRepository.save(any(Appointment.class))).thenReturn(appointment);

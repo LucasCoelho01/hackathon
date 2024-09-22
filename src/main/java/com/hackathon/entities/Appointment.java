@@ -43,7 +43,7 @@ public class Appointment implements Serializable {
     
     public Appointment() {}
 
-    public Appointment(AppointmentRequestDto appointmentRequestDto, Doctor doctor) {
+    public Appointment(AppointmentRequestDto appointmentRequestDto, Doctor doctor) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         this.doctor = doctor;
@@ -51,17 +51,29 @@ public class Appointment implements Serializable {
         this.finalDateTime = convertFinalLocalDateTime(LocalDateTime.parse(this.initialDateTime, formatter));
     }
 
-    public String convertInitialLocalDateTime(int year, int month, int day, int hour, int minute) {
+    public String convertInitialLocalDateTime(int year, int month, int day, int hour, int minute) throws Exception {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         LocalDateTime date = LocalDateTime.of(year, month, day, hour, minute);
 
-        return date.format(formatter);
+        if (checkIfDateIsLater(date)) {
+            return date.format(formatter);
+        } else {
+            throw new Exception("Data inválida");
+        }
     }
 
     public String convertFinalLocalDateTime(LocalDateTime initialDateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         return initialDateTime.plusHours(1).format(formatter);
+    }
+
+    public boolean checkIfDateIsLater(LocalDateTime date) {
+        if (date.isAfter(LocalDateTime.now())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
