@@ -21,8 +21,11 @@ public class AppointmentController {
     private AppointmentService appointmentService;
 
     @PostMapping
-    ResponseEntity<Appointment> createAppointment(@RequestBody AppointmentRequestDto appointmentRequestDto) throws Exception {
-        return new ResponseEntity<>(appointmentService.createAppointment(appointmentRequestDto), HttpStatus.CREATED);
+    ResponseEntity<String> createAppointment(@RequestBody AppointmentRequestDto appointmentRequestDto) throws Exception {
+        appointmentService.createAppointment(appointmentRequestDto);
+
+        String response = "Horário cadastrado com sucesso";
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -31,9 +34,10 @@ public class AppointmentController {
     }
 
     @PutMapping()
-    ResponseEntity<Optional<Appointment>> setPatientToAppointment(@RequestBody AppointmentSetPatientRequestDto appointmentSetPatientRequestDto) throws Exception {
+    ResponseEntity<String> setPatientToAppointment(@RequestBody AppointmentSetPatientRequestDto appointmentSetPatientRequestDto) throws Exception {
         Optional<Appointment> appointment = appointmentService.setPatientToAppointment(appointmentSetPatientRequestDto);
 
-        return new ResponseEntity<>(appointment, HttpStatus.OK);
+        String response = "Agendamento realizado com sucesso";
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package com.hackathon.services;
 
 import com.hackathon.entities.Appointment;
 import com.hackathon.entities.Doctor;
+import com.hackathon.entities.Email;
 import com.hackathon.entities.dtos.AppointmentRequestDto;
 import com.hackathon.entities.dtos.AppointmentSetPatientRequestDto;
 import com.hackathon.repositories.AppointmentRepository;
@@ -23,6 +24,9 @@ public class AppointmentService {
 
     @Autowired
     private DoctorService doctorService;
+
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public Appointment createAppointment(AppointmentRequestDto appointmentRequestDto) {
@@ -51,10 +55,25 @@ public class AppointmentService {
             updatedAppointment.setBooked(true);
 
             appointmentRepository.save(updatedAppointment);
+            sendEmail(updatedAppointment);
         } else {
             new Exception("Appointment not found");
         }
 
         return appointment;
+    }
+
+    private void sendEmail(Appointment updatedAppointment) {
+        String to = updatedAppointment.getDoctor().getEmail();
+        String subject = "Health&Med - Nova consulta agendada";
+        String body = "Olá, Dr. " + updatedAppointment.getDoctor().getName() + " !\n";
+        body += "Você tem uma nova consulta marcada! \n";
+        body += "Paciente: " + updatedAppointment.getPatient().getName() + "\n";
+        body += "Data e horário: " + updatedAppointment.getInitialDateTime();
+
+        var email = new Email(to, subject, body);
+
+        emailService.sendEmail(email);
+
     }
 }

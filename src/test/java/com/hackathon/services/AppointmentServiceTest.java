@@ -35,6 +35,9 @@ public class AppointmentServiceTest {
     @Mock
     private DoctorService doctorService;
 
+    @Mock
+    private EmailService emailService;
+
     @InjectMocks
     private AppointmentService appointmentService;
 
