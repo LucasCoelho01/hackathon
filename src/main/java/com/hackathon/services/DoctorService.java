@@ -16,10 +16,14 @@ public class DoctorService {
     @Autowired
     private DoctorRepository doctorRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Transactional
     public Doctor createDoctor(DoctorRequestDto doctorRequestDto) {
         Doctor doctor = new Doctor(doctorRequestDto);
 
+        userService.createUser(doctor.getEmail(), doctor.getPassword());
         return doctorRepository.save(doctor);
     }
 
