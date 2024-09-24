@@ -1,9 +1,8 @@
 package com.hackathon.controllers;
 
-import com.hackathon.entities.Doctor;
 import com.hackathon.entities.User;
-import com.hackathon.entities.dtos.DoctorRequestDto;
 import com.hackathon.entities.dtos.LoginDto;
+import com.hackathon.entities.dtos.ResponseTokenJwt;
 import com.hackathon.security.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,10 +25,12 @@ public class LoginController {
     private TokenService tokenService;
 
     @PostMapping
-    ResponseEntity<String> login(@RequestBody LoginDto loginDto) throws Exception {
-        var token = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.password());
-        var authentication = authenticationManager.authenticate(token);
+    ResponseEntity<ResponseTokenJwt> login(@RequestBody LoginDto loginDto) throws Exception {
+        var authenticationToken = new UsernamePasswordAuthenticationToken(loginDto.login(), loginDto.password());
+        var authentication = authenticationManager.authenticate(authenticationToken);
 
-        return new ResponseEntity<>(tokenService.generateToken((User) authentication.getPrincipal()), HttpStatus.OK);
+        var tokenJwt = tokenService.generateToken((User) authentication.getPrincipal());
+
+        return new ResponseEntity<>(new ResponseTokenJwt(tokenJwt), HttpStatus.OK);
     }
 }
