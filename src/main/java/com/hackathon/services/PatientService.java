@@ -14,10 +14,14 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private UserService userService;
+
     @Transactional
     public Patient createPatient(PatientRequestDto patientRequestDto) {
         Patient patient = new Patient(patientRequestDto);
 
+        userService.createUser(patient.getEmail(), patient.getPassword());
         return patientRepository.save(patient);
     }
 

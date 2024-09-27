@@ -3,7 +3,6 @@ package com.hackathon.services;
 import com.hackathon.entities.Patient;
 import com.hackathon.entities.dtos.PatientRequestDto;
 import com.hackathon.repositories.PatientRepository;
-import com.hackathon.services.PatientService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -20,6 +19,9 @@ public class PatientServiceTest {
 
     @Mock
     private PatientRepository patientRepository;
+
+    @Mock
+    private UserService userService;
 
     @InjectMocks
     private PatientService patientService;

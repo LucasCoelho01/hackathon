@@ -4,16 +4,16 @@ import com.hackathon.entities.Doctor;
 import com.hackathon.entities.Appointment;
 import com.hackathon.entities.dtos.DoctorRequestDto;
 import com.hackathon.repositories.DoctorRepository;
-import com.hackathon.services.DoctorService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 import java.util.Arrays;
 import java.util.List;
-import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -25,6 +25,12 @@ public class DoctorServiceTest {
 
     @InjectMocks
     private DoctorService doctorService;
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     private DoctorRequestDto doctorRequestDto;
     private Doctor doctor;
